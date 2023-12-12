@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Rating</title>
+        <link rel="stylesheet" href="rating.css">
+    </head>
+    <body>
+        <h1>Rating Widget</h1>
+        <rating-widget>
+            <form action="https://httpbin.org/post" method="POST" class="stars" id="stars"> 
+                <input checked name="rating" value="0" type="radio" id="zero-star">
+                    <label for="zero-star"></label> 
+                <input name="rating" value="1" type="radio" id="one-star" onclick="feedback()">
+                <label for="one-star">
+                  <span class="s">★</span>
+                </label>
+              
+                <input name="rating" value="2" type="radio" id="two-stars" onclick="feedback()">
+                <label for="two-stars">
+                  <span class="s">★</span>
+                </label>
+              
+                <input name="rating" value="3" type="radio" id="three-stars" onclick="feedback()">
+                <label for="three-stars">
+                  <span class="s">★</span>
+                </label>
+              
+                <input name="rating" value="4" type="radio" id="four-stars" onclick="feedback()">
+                <label for="four-stars">
+                  <span class="s">★</span>
+                </label>
+              
+                <input name="rating" value="5" type="radio" id="five-stars" onclick="feedback()">
+                <label for="five-stars">
+                  <span class="s">★</span>
+                </label>
+              </form>
+              <p id="feedback"></p>
+        </rating-widget>
+        <script type="text/javascript">
+            var feedback = function() { 
+                if (document.getElementById('one-star').checked) { 
+                    document.getElementById('feedback').innerHTML = "Thanks for your 1 star rating. We will do better."
+                } else if (document.getElementById('two-stars').checked) { 
+                    document.getElementById('feedback').innerHTML = "Thanks for your 2 star rating. We hope you visit again."
+                } else if (document.getElementById('three-stars').checked) { 
+                    document.getElementById('feedback').innerHTML = "Thanks for your 3 star rating. Please come back soon."
+                } else if (document.getElementById('four-stars').checked) { 
+                    document.getElementById('feedback').innerHTML = "Thanks for your 4 star rating! We are glad you enjoyed."
+                } else if (document.getElementById('five-stars').checked) { 
+                    document.getElementById('feedback').innerHTML = "Thanks for your 5 star rating! We are happy you enjoyed your experience."
+                }
+                document.getElementById('stars').style.display="none";
+            }
+            const request = new XMLHttpRequest();
+            request.open('POST', "https://httpbin.org/post");
+        </script>
+        <noscript>
+            <form action="https://httpbin.org/post" method="POST" id="stars-nojs" class="stars-nojs">
+                <label for="rating">How satisifed are you?</label>
+                <input type="hidden" name="question" value="How satisfied are you?">
+                <input type="hidden" name="sentBy" value="HTML">
+                <input type="number" id="rating" name="rating" min="1" max="5" value="0" required>
+                <button type="submit">Submit</button>
+            </form>
+        </noscript>
+    </body>
+</html>

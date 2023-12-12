@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Weather</title>
+    </head>
+    <body>
+        <h1>Current Weather</h1>
+        <output></output>
+        <current-weather>
+        </current-weather>
+        <script type="module">
+            const output = document.querySelector('output');
+            const request = new XMLHttpRequest();
+            request.open('GET','https://api.weather.gov/points/32.842674,-117.257767',false);
+            request.addEventListener('load', () => { 
+                if (request.status === 200) { 
+                    const response = JSON.parse(request.responseText);
+                    console.log(response["properties"]["forecast"]);
+                    const request2 = new XMLHttpRequest();
+                    console.log(request2);
+                    request2.open('GET', response["properties"]["forecast"]);
+                    console.log(request2.status);
+                    request2.addEventListener('load', () => { 
+                        if (request2.status === 200) { 
+                            console.log(request2);
+                            const response2 = JSON.parse(request2.responseText);
+                            var forecast = response2["properties"]["periods"]["0"]["shortForecast"];
+                            var icon = "";
+                            if (forecast.includes('Cloud')) { 
+                                icon = "☁";
+                            } else if (forecast.includes('Fog')) { 
+                                icon = "🌫";
+                            } else if (forecast.includes('Thunder')) { 
+                                icon = "🌩";
+                            } else if (forecast.includes('Rain')) { 
+                                icon = "🌧";
+                            } else if (forecast.includes('Snow')) { 
+                                icon = "☃";
+                            } else { 
+                                icon = "☀";
+                            }
+                            output.style.fontSize = "x-large";
+                            output.textContent = icon + response2["properties"]["periods"]["0"]["shortForecast"] + 
+                            " " + response2["properties"]["periods"]["0"]["temperature"] + "°" + 
+                            response2["properties"]["periods"]["0"]["temperatureUnit"] +", Relative Humidity: " + 
+                            response2["properties"]["periods"]["0"]["relativeHumidity"]["value"] +", Wind Speed: " + 
+                            response2["properties"]["periods"]["0"]["windSpeed"] + " " + response2["properties"]["periods"]["0"]["windDirection"] ;
+                            console.log(response2);
+                        }
+                    });
+                    request2.send();
+                }
+
+            });
+            request.send();
+        </script>
+        <noscript>
+            <h2>Current Weather Conditions Unavailable.</h2>
+        </noscript>
+    </body>
+</html>

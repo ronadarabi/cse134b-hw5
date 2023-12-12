@@ -1,0 +1,27 @@
+.hide,
+.stars>input {
+  position: absolute;
+  height: .0625rem; 
+  width: .0625rem;
+}
+
+.stars {
+  font-size: 3rem;
+  display: inline-flex;
+}
+
+.stars input:checked~label>span.s,
+.stars>label:hover~input~label>span.s {
+  color: gray;
+}
+
+.stars span.s,
+.stars:hover>input+label>span.s,
+.stars>input:checked+label>span.s {
+  color: gold;
+}
+
+.stars>input~label:hover>span.s {
+  color: goldenrod;
+}
+
